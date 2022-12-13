@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsUUID, ValidateNested } from 'class-validator';
-import { CreateOrderProductDto } from './create-order-product.dto';
+import { CreateOrderProductDto } from 'src/product/dto/create-product.dto';
 
 export class CreateOrderDto {
   @IsUUID()

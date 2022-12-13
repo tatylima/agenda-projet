@@ -1,4 +1,4 @@
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common/pipes/validation.pipe';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
@@ -13,6 +13,7 @@ async function bootstrap() {
     .setDescription('Agendas Personalizadas')
     .setVersion('1.0.0')
     .addTag('status')
+    .addTag('product')  // < A ORDEM PODE SER ALTERADA
     .addTag('')
     .build();
 

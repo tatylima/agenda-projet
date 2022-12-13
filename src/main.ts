@@ -16,7 +16,7 @@ async function bootstrap() {
     .addTag('product')
     .addTag('user')
     .addTag('order')  // < A ORDEM PODE SER ALTERADA
-    .addTag('')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

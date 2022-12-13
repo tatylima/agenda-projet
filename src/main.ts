@@ -13,7 +13,8 @@ async function bootstrap() {
     .setDescription('Agendas Personalizadas')
     .setVersion('1.0.0')
     .addTag('status')
-    .addTag('product')  // < A ORDEM PODE SER ALTERADA
+    .addTag('product')
+    .addTag('user')  // < A ORDEM PODE SER ALTERADA
     .addTag('')
     .build();
 

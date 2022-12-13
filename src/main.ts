@@ -14,7 +14,8 @@ async function bootstrap() {
     .setVersion('1.0.0')
     .addTag('status')
     .addTag('product')
-    .addTag('user')  // < A ORDEM PODE SER ALTERADA
+    .addTag('user')
+    .addTag('order')  // < A ORDEM PODE SER ALTERADA
     .addTag('')
     .build();
 

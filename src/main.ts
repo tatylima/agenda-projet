@@ -13,8 +13,11 @@ async function bootstrap() {
     .setDescription('Agendas Personalizadas')
     .setVersion('1.0.0')
     .addTag('status')
+    .addTag('auth')
     .addTag('product')
     .addTag('user')
+    .addTag('profile')
+    .addTag('genre')
     .addTag('order')  // < A ORDEM PODE SER ALTERADA
     .addBearerAuth()
     .build();

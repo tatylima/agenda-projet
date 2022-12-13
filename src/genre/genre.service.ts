@@ -26,7 +26,7 @@ export class GenreService {
 
   async create(user: User, dto: CreateGenreDto) {
     if (user.isAdmin) {
-      const genre: genre = { ...dto };
+      const genre: Genre = { ...dto };
       return await this.prisma.genre.create({ data: genre});
     } else {
       throw new UnauthorizedException(

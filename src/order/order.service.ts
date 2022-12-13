@@ -1,98 +1,65 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { handleError } from 'src/utils/handle-error.util';
 import { CreateOrderDto } from './dto/create-order.dto';
 
 @Injectable()
-export class OrderService {
+export class OrdersService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(userId: string, createOrderDto: CreateOrderDto) {
+  selectingInformation = {
+    id: true,
+    userId: true,
+    user: {
+      select: {
+        name: true,
+        email: true,
+      },
+    },
+    products: {
+      select: {
+        quantity: true,
+        product: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    },
+    createdAt: true,
+  };
+
+  create(createOrderDto: CreateOrderDto) {
     const data: Prisma.OrderCreateInput = {
       user: {
         connect: {
-          id: userId,
+          id: createOrderDto.userId,
         },
       },
-      products: {
+      orderProducts: {
         createMany: {
-          data: createOrderDto.products.map((createOrderProductDto) => ({
-            productId: createOrderProductDto.productId,
-            quantity: createOrderProductDto.quantity,
-            description: createOrderProductDto.description,
+          data: createOrderDto.products.map((element) => ({
+            productId: element.productId,
+            quantity: element.quantity,
           })),
         },
       },
     };
 
-    return this.prisma.order
-      .create({
-        data,
-        select: {
-          id: true,
-          user: {
-            select: {
-              name: true,
-            },
-          },
-          products: {
-            select: {
-              quantity: true,
-              description: true,
-              product: {
-                select: {
-                  name: true,
-                },
-              },
-            },
-          },
-        },
-      })
-      .catch(handleError);
+    return this.prisma.order.create({
+      data,
+      select: this.selectingInformation,
+    });
   }
 
   findAll() {
-    return this.prisma.order.findMany({
-      select: {
-        id: true,
-        user: {
-          select: {
-            name: true,
-          },
-        },
-        _count: {
-          select: {
-            products: true,
-          },
-        },
-      },
-    });
+    return this.prisma.order.findMany({ select: this.selectingInformation });
   }
 
   findOne(id: string) {
     return this.prisma.order.findUnique({
       where: { id },
-      include: {
-        user: {
-          select: {
-            name: true,
-          },
-        },
-        products: {
-          select: {
-            product: {
-              select: {
-                id: true,
-                name: true,
-                price: true,
-                image: true,
-                description: true,
-              },
-            },
-          },
-        },
-      },
+      select: this.selectingInformation,
     });
   }
 }

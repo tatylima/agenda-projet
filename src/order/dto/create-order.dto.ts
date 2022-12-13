@@ -1,23 +1,21 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsUUID, ValidateNested } from 'class-validator';
-import { CreateOrderProductDto } from 'src/product/dto/create-product.dto';
+import { CreateOrderToProctDto } from './create-order-to-product.dto';
 
 export class CreateOrderDto {
-  @IsUUID()
   @ApiProperty({
-    description: 'ID do usuário que está criando o pedido',
-    example: 'e1bc0c89-a319-44df-a6e9-db66fe7b956b',
+    description: 'user id, used to identify',
+    example: '79afc834-9485-46bd-8f0b-61c7007fc128',
   })
+  @IsUUID()
   userId: string;
 
-  @ValidateNested({
-    each: true,
-  })
-  @Type(() => CreateOrderProductDto)
   @ApiProperty({
-    description: 'Lista com os IDs dos produtos que estão no pedido',
-    type: [CreateOrderProductDto],
+    description: 'product array with all selected and quantity the products',
+    example: '[ { id: 79afc834-9485-46bd-8f0b-61c7007fc128, quantity: 1} ]',
   })
-  products: CreateOrderProductDto[];
+  @ValidateNested({ each: true })
+  @Type(() => CreateOrderToProctDto)
+  products: CreateOrderToProctDto[];
 }

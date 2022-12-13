@@ -87,7 +87,7 @@ export class ProfileService {
 
   async update(userId: string, id: string, dto: UpdateProfileDto) {
     await this.findById(id);
-    if (dto.gameId) {
+    if (dto.productId) {
       return this.prisma.profile
         .update({
           where: { id },

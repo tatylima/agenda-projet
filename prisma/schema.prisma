@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,4 +5,32 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+
+model Product {         // NOVO MODEL
+  id          String @id @default(uuid())
+  name        String @unique
+  description String
+  price       Float
+  image       String
+                        // NOVOS DECORATORS ABAIXO:
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("product")//O decorator @map serve para mapear novos nomes aos campos da tabela.//
+}
+// ...
+
+model User {
+  id       String @id @default(uuid())
+  nickname String @unique
+  name     String
+  password String
+  image    String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("user")
 }
